@@ -1,0 +1,27 @@
+html,
+body {
+    background: lightblue;
+    height: 100%;
+    margin: 0;
+}
+
+.navbar ul {
+    background: lightgrey;
+    outline: red 1rem;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+}
+
+.navbar ul li a {
+    display: block;
+    padding: 8px;
+}
+
+.navbar ul li a:hover {
+    background: darkgray;
+}
