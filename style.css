@@ -7,7 +7,6 @@ body {
 
 .navbar ul {
     background: lightgrey;
-    outline: red 1rem;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -19,9 +18,15 @@ body {
 
 .navbar ul li a {
     display: block;
-    padding: 8px;
+    color: darkslategray;
+    padding: 1rem;
+    text-decoration: none;
 }
 
 .navbar ul li a:hover {
-    background: darkgray;
+    background: gray;
+}
+
+.navbar ul li a:active {
+    background: darkgray
 }
