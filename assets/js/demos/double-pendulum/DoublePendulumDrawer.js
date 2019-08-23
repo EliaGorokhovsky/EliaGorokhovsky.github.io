@@ -17,7 +17,7 @@ class DrawingApp {
         this.context.lineWidth = 1;
         this.lastRender = 0;
         
-        this.pendulum = new DoublePendulum(0.5, 1, Math.PI / 2, Math.PI / 6, 2, 2, 9.8)
+        this.pendulum = new DoublePendulum(0.1, 0.12, 0.5, 1, Math.PI / 2, Math.PI / 6, 2, 2, 9.8, 0)
     }
 
     /**
@@ -47,10 +47,10 @@ class DrawingApp {
         this.context.lineTo(x2, y2);
         this.context.stroke();
         this.context.beginPath();
-        this.context.arc(x1, y1, this.canvas.width / 64, 0, 2 * Math.PI);
+        this.context.arc(x1, y1, this.canvas.width / 4 * this.pendulum.radius1, 0, 2 * Math.PI);
         this.context.fill();
         this.context.beginPath();
-        this.context.arc(x2, y2, this.canvas.width / 64, 0, 2 * Math.PI);
+        this.context.arc(x2, y2, this.canvas.width / 4 * this.pendulum.radius2, 0, 2 * Math.PI);
         this.context.fill();
     }
 
