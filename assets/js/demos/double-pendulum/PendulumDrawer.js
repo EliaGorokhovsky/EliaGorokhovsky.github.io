@@ -11,13 +11,13 @@ class DrawingApp {
     constructor() {
         this.canvas = document.getElementsByClassName("pendulumCanvas")[0];
         this.context = this.canvas.getContext("2d");
-        this.context.lineCap = 'round';
-        this.context.lineJoin = 'round';
-        this.context.strokeStyle = 'black';
+        this.context.lineCap = "round";
+        this.context.lineJoin = "round";
+        this.context.strokeStyle = "black";
         this.context.lineWidth = 1;
         this.lastRender = 0;
                 
-        this.pendulum = new Pendulum(this.canvas.width / 32, 7 * this.canvas.width / 15, Math.PI / 3, 10 * this.canvas.width);
+        this.pendulum = new Pendulum(0.25, 2, Math.PI / 3, 9.8);
 
     }
 
@@ -38,8 +38,8 @@ class DrawingApp {
         );
         this.context.fill();
         //Single pendulum
-        let x = this.canvas.width / 2 + this.pendulum.length * Math.sin(this.pendulum.angle);
-        let y = this.canvas.height / 2 + this.pendulum.length * Math.cos(this.pendulum.angle);
+        let x = this.canvas.width / 2 + this.canvas.width / 4 * this.pendulum.length * Math.sin(this.pendulum.angle);
+        let y = this.canvas.height / 2 + this.canvas.width / 4 * this.pendulum.length * Math.cos(this.pendulum.angle);
         this.context.beginPath();
         this.context.moveTo(this.canvas.width / 2,this.canvas.height / 2);
         this.context.lineTo(x, y);
@@ -48,7 +48,7 @@ class DrawingApp {
         this.context.arc(
             x,
             y,
-            this.pendulum.radius,
+            this.canvas.width / 4 * this.pendulum.radius,
             0,
             2 * Math.PI
         );

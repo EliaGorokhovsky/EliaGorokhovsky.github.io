@@ -11,13 +11,13 @@ class DrawingApp {
     constructor() {
         this.canvas = document.getElementsByClassName("pendulumCanvas")[0];
         this.context = this.canvas.getContext("2d");
-        this.context.lineCap = 'round';
-        this.context.lineJoin = 'round';
-        this.context.strokeStyle = 'black';
+        this.context.lineCap = "round";
+        this.context.lineJoin = "round";
+        this.context.strokeStyle = "black";
         this.context.lineWidth = 1;
         this.lastRender = 0;
         
-        this.pendulum = new DoublePendulum(110, 90, Math.PI / 6, 2 * Math.PI / 3, 200, 200, 1000)
+        this.pendulum = new DoublePendulum(0.5, 1, Math.PI / 2, Math.PI / 6, 2, 2, 9.8)
     }
 
     /**
@@ -37,10 +37,10 @@ class DrawingApp {
         );
         this.context.fill();
         //Double pendulum
-        let x1 = this.canvas.width / 2 + this.pendulum.length1 * Math.sin(this.pendulum.angle1);
-        let y1 = this.canvas.height / 2 + this.pendulum.length1 * Math.cos(this.pendulum.angle1);
-        let x2 = x1 + this.pendulum.length2 * Math.sin(this.pendulum.angle2);
-        let y2 = y1 + this.pendulum.length2 * Math.cos(this.pendulum.angle2);
+        let x1 = this.canvas.width / 2 + this.canvas.width / 4 * this.pendulum.length1 * Math.sin(this.pendulum.angle1);
+        let y1 = this.canvas.height / 2 + this.canvas.width / 4 * this.pendulum.length1 * Math.cos(this.pendulum.angle1);
+        let x2 = x1 + this.canvas.width / 4 * this.pendulum.length2 * Math.sin(this.pendulum.angle2);
+        let y2 = y1 + this.canvas.width / 4 * this.pendulum.length2 * Math.cos(this.pendulum.angle2);
         this.context.beginPath();
         this.context.moveTo(this.canvas.width / 2,this.canvas.height / 2);
         this.context.lineTo(x1, y1);
