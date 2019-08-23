@@ -1,42 +1,9 @@
+@import "_navbar";
+@import "_vars";
+
 html,
 body {
-    background: #fff;
+    background: $faintblue;
     height: 100%;
     margin: 0;
-}
-
-.navbar {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    margin: 1rem;
-    position: sticky;
-    top: 0;
-}
-
-.navbar ul {
-    background: #f5f5f5;
-    list-style-type: none;
-    margin: 0;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    padding: 0;
-    display: flex;
-}
-
-.navbar ul li {
-    flex-direction: row;
-    flex: 1;
-    justify-content: space-evenly;
-}
-
-.navbar ul li a {
-    display: block;
-    color: #000;
-    padding: 1rem;
-    text-align: center;
-    text-decoration: none;
-}
-
-.navbar ul li a:hover {
-    background: #bbb;
 }
