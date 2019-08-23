@@ -1,11 +1,20 @@
 @import "_navbar";
 @import "_vars";
 
+* {
+    box-sizing: border-box;
+}
+
+
 html,
 body {
     background: $faintblue;
     height: 100%;
     margin: 0;
+}
+
+.content {
+    padding: 1rem;
 }
 
 p {

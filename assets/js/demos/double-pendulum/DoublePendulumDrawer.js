@@ -59,7 +59,7 @@ class DrawingApp {
      */
     update(timestamp) {
         let delta = timestamp - this.lastRender;
-        this.pendulum.update(delta / 640);
+        this.pendulum.update(Math.min(delta / 1000, 0.05));
         this.draw();
         this.lastRender = timestamp;
         window.requestAnimationFrame(this.update.bind(this));
