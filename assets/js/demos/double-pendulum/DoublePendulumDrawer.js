@@ -44,7 +44,7 @@ class DrawingApp {
             2 * Math.PI
         );
         this.context.fill();
-        //Double pendulum
+        // Calculate position
         let x1 = this.canvas.width / 2 + this.canvas.width / 4 * this.pendulum.length1 * Math.sin(this.pendulum.angle1);
         let y1 = this.canvas.height / 2 + this.canvas.width / 4 * this.pendulum.length1 * Math.cos(this.pendulum.angle1);
         let x2 = x1 + this.canvas.width / 4 * this.pendulum.length2 * Math.sin(this.pendulum.angle2);
@@ -57,18 +57,6 @@ class DrawingApp {
         if (this.timeseries2.length > this.traceLength) {
             this.timeseries2.splice(0, 1);
         }
-        //Draw pendulum
-        this.context.beginPath();
-        this.context.moveTo(this.canvas.width / 2,this.canvas.height / 2);
-        this.context.lineTo(x1, y1);
-        this.context.lineTo(x2, y2);
-        this.context.stroke();
-        this.context.beginPath();
-        this.context.arc(x1, y1, this.canvas.width / 4 * this.pendulum.radius1, 0, 2 * Math.PI);
-        this.context.fill();
-        this.context.beginPath();
-        this.context.arc(x2, y2, this.canvas.width / 4 * this.pendulum.radius2, 0, 2 * Math.PI);
-        this.context.fill();
         //Draw timeseries
         if (this.tracing) {
             let style = this.context.strokeStyle;
@@ -88,6 +76,18 @@ class DrawingApp {
             this.context.stroke();
             this.context.strokeStyle = style;
         }
+        //Draw pendulum
+        this.context.beginPath();
+        this.context.moveTo(this.canvas.width / 2,this.canvas.height / 2);
+        this.context.lineTo(x1, y1);
+        this.context.lineTo(x2, y2);
+        this.context.stroke();
+        this.context.beginPath();
+        this.context.arc(x1, y1, this.canvas.width / 4 * this.pendulum.radius1, 0, 2 * Math.PI);
+        this.context.fill();
+        this.context.beginPath();
+        this.context.arc(x2, y2, this.canvas.width / 4 * this.pendulum.radius2, 0, 2 * Math.PI);
+        this.context.fill();
     }
 
     /**
