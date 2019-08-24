@@ -17,7 +17,7 @@ class DrawingApp {
         this.context.lineWidth = 1;
         this.lastRender = 0;
         
-        this.pendulum = new DoublePendulum(0.1, 0.12, 0.5, 1, Math.PI / 2, Math.PI / 6, 2, 2, 9.8, 0)
+        this.pendulum = new DoublePendulum(0.1, 0.06, 0.7, 1, Math.PI / 2, Math.PI / 6, 2, 1, 9.8, 6)
     }
 
     /**

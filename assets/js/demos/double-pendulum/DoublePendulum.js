@@ -30,23 +30,28 @@ export class DoublePendulum {
 
     /**
      * Use RK4 to update the angle and angular velocity of the bob
+     * Change function is Hamiltonian formalization of equatios of motion
+     * from http://scienceworld.wolfram.com/physics/DoublePendulum.html
      */
     update(dt) {
-        // State is [angle1, angle2, angular velocity 1, angular velocity 2]
-        let changeFunction = state => [
-            state[2],
-            state[3],
-            (-this.gravity * (2 * this.mass1 + this.mass2) * Math.sin(state[0])
-                - this.mass2 * this.gravity * Math.sin(state[0] - 2 * state[1])
-                - 2 * Math.sin(state[0] - state[1]) * this.mass2 
-                * (state[2] * state[2] * this.length2 + state[3] * state[3] * this.length1 * Math.cos(state[0] - state[1])))
-                / (this.length1 * (2 * this.mass1 + this.mass2 - this.mass2 * Math.cos(2 * (state[0] - state[1])))),
-            2 * Math.sin(state[0] - state[1]) *
-                (state[2] * state[2] * this.length1 * (this.mass1 + this.mass2)
-                + this.gravity * (this.mass1 + this.mass2) * Math.cos(state[0])
-                + state[3] * state[3] * this.length2 * this.mass2 * Math.cos(state[0] - state[1]))
-                / (this.length2 * (2 * this.mass1 + this.mass2 - this.mass2 * Math.cos(2 * (state[0] - state[1]))))
-        ];
+        //State is [angle1, angle2, momentum1, momentum2]
+        let changeFunction = state => {
+            let denom = this.length1 * this.length2 * (this.mass1  + this.mass2 * Math.pow(Math.sin(state[0] - state[1]), 2));
+            let c1 = (state[2] * state[3] * Math.sin(state[0] - state[1])) / denom;
+            let c2 = Math.sin(2 * (state[0] - state[1])) * 
+                (this.length2 * this.length2 * this.mass2 * state[2] * state[2] +
+                    this.length1 * this.length1 * (this.mass1 + this.mass2) * state[3] * state[3] -
+                    this.length1 * this.length2 * this.mass2 * state[2] * state[3] * Math.cos(state[0] - state[1])) /
+                    (2 * denom * denom);
+            return [
+            (this.length2 * state[2] - this.length1 * state[3] * Math.cos(state[0] - state[1])) /
+                (this.length1 * denom),
+            (this.length1 * (this.mass1 + this.mass2) * state[3] - this.length2 * this.mass2 * state[2] * Math.cos(state[0] - state[1])) /
+                (this.length2 * this.mass2 * denom),
+            -(this.mass1 + this.mass2) * this.gravity * this.length1 * Math.sin(state[0]) - c1 + c2,
+            -this.mass2 * this.gravity * this.length2 * Math.sin(state[1]) + c1 - c2
+            ];
+        }
         let state = rk4(changeFunction, [this.angle1, this.angle2, this.angularVelocity1, this.angularVelocity2], dt);
         //Compute drag, approximating C_D as 0.5--should be in changefunction
         let drag1 = 0.25 
@@ -54,27 +59,18 @@ export class DoublePendulum {
             * Math.PI 
             * this.angularVelocity1 * this.angularVelocity1
             * this.radius1 * this.radius1 * this.radius1 * this.radius1
-            / this.mass1 / this.length1;
+            / this.length1;
         let drag2 = 0.25 
             * this.airDensity 
             * Math.PI 
             * this.angularVelocity2 * this.angularVelocity2
             * this.radius2 * this.radius2 * this.radius2 * this.radius2
-            / this.mass2 / this.length2;
+            / this.length2;
         //Apply changes 
         this.angle1 = state[0] % (2 * Math.PI);
         this.angle2 = state[1] % (2 * Math.PI);
         this.angularVelocity1 = state[2] - Math.sign(state[2]) * drag1;
         this.angularVelocity2 = state[3] - Math.sign(state[3]) * drag2;
-        /*let potential = -(this.mass1 + this.mass2) * this.gravity * this.length1 * Math.cos(this.angle1) 
-            - this.mass2 * this.gravity * this.length2 * Math.cos(this.angle2);
-        let kinetic = 0.5 * this.mass1 * this.length1 * this.length1 * this.angularVelocity1 * this.angularVelocity1 
-            + 0.5 * this.mass2 * 
-                (this.length1 * this.length1 * this.angularVelocity1 * this.angularVelocity1 
-                    + this.length2 * this.length2 * this.angularVelocity2 * this.angularVelocity2 
-                    + 2 * this.length1 * this.length2 * this.angularVelocity1 * this.angularVelocity2 * Math.cos(this.angle1 - this.angle2)
-                );
-        console.log(`Energy: ${potential + kinetic}`);*/
     }
 
 }
