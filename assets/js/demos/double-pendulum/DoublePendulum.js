@@ -54,18 +54,18 @@ export class DoublePendulum {
             * Math.PI 
             * this.angularVelocity1 * this.angularVelocity1
             * this.radius1 * this.radius1 * this.radius1 * this.radius1
-            / this.mass1;
+            / this.mass1 / this.length1;
         let drag2 = 0.25 
             * this.airDensity 
             * Math.PI 
             * this.angularVelocity2 * this.angularVelocity2
             * this.radius2 * this.radius2 * this.radius2 * this.radius2
-            / this.mass2;
+            / this.mass2 / this.length2;
         //Apply changes 
         this.angle1 = state[0] % (2 * Math.PI);
         this.angle2 = state[1] % (2 * Math.PI);
-        this.angularVelocity1 = state[2] - Math.sign(state[2]) * this.length1 * drag1;
-        this.angularVelocity2 = state[3] - Math.sign(state[3]) * this.length2 * drag2;
+        this.angularVelocity1 = state[2] - Math.sign(state[2]) * drag1;
+        this.angularVelocity2 = state[3] - Math.sign(state[3]) * drag2;
         /*let potential = -(this.mass1 + this.mass2) * this.gravity * this.length1 * Math.cos(this.angle1) 
             - this.mass2 * this.gravity * this.length2 * Math.cos(this.angle2);
         let kinetic = 0.5 * this.mass1 * this.length1 * this.length1 * this.angularVelocity1 * this.angularVelocity1 

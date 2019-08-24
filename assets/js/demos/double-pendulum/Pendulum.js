@@ -37,11 +37,11 @@ export class Pendulum {
             * Math.PI 
             * this.angularVelocity * this.angularVelocity
             * this.radius * this.radius * this.radius * this.radius 
-            / this.mass;
+            / this.mass / this.length;
         //This should be in changeFunction, but isn't for simplicity reasons
         //Apply changes
         this.angle = state[0] % (2 * Math.PI);
-        this.angularVelocity = state[1] - Math.sign(state[1]) * this.length * drag;
+        this.angularVelocity = state[1] - Math.sign(state[1]) * drag;
     }
 
 }
