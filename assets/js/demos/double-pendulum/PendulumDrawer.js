@@ -17,7 +17,7 @@ class DrawingApp {
         this.context.lineWidth = 1;
         this.lastRender = 0;
                 
-        this.pendulum = new Pendulum(0.25, 2, Math.PI / 3, 9.8, 1, 5);
+        this.pendulum = new Pendulum(0.25, 2, Math.PI / 12, 9.8, 1, 0);
 
     }
 
@@ -56,11 +56,26 @@ class DrawingApp {
     }
 
     /**
+     * User interface: update variables and take input
+     */
+    updateParams() {
+        document.getElementById("lengthParam").textContent = `length: ${this.pendulum.numberOfSwings} m`;
+        document.getElementById("massParam").textContent = `mass: ${this.pendulum.mass} g`;
+        document.getElementById("radiusParam").textContent = `radius: ${this.pendulum.radius} m`;
+        document.getElementById("gravityParam").textContent = `gravity acc.: ${this.pendulum.gravity} ms^-2`;
+        document.getElementById("airDensityParam").textContent = `air density: ${this.pendulum.airDensity} gm^-3`;
+        document.getElementById("theoryPeriodParam").textContent = `calculated period: ${this.pendulum.getTheoreticalPeriod()} s`;
+        document.getElementById("lastPeriodParam").textContent = `last period: ${this.pendulum.lastPeriod} s`;
+        document.getElementById("meanPeriodParam").textContent = `mean period: ${this.pendulum.averagePeriod} s`;
+    }
+
+    /**
      * Update the graphics and logic
      */
     update(timestamp) {
         let delta = timestamp - this.lastRender;
         this.pendulum.update(Math.min(delta / 1000, 0.05));
+        this.updateParams();
         this.draw();
         this.lastRender = timestamp;
         window.requestAnimationFrame(this.update.bind(this));

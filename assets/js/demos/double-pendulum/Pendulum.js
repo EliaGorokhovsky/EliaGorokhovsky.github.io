@@ -19,6 +19,11 @@ export class Pendulum {
         this.gravity = gravity;
         this.mass = mass;
         this.airDensity = airDensity;
+        this.timeSinceLastSwing = 0;
+        this.backswing = false; //Whether the pendulum is about to complete its current period
+        this.averagePeriod = 0;
+        this.numberOfSwings = 0;
+        this.lastPeriod = 0;
     }
 
     /**
@@ -26,22 +31,47 @@ export class Pendulum {
      */
     update(dt) {
         // State is [angle, angular velocity]
+        this.timeSinceLastSwing += dt;
         let changeFunction = state => [
             state[1],
             -Math.sin(state[0]) * (this.gravity / this.length)
         ];
         let state = rk4(changeFunction, [this.angle, this.angularVelocity], dt);
+        //Update period
+        if (Math.sign(state[1]) != Math.sign(this.angularVelocity) && this.timeSinceLastSwing > dt) {
+            if (this.backswing) {
+                this.lastPeriod = this.timeSinceLastSwing;
+                this.timeSinceLastSwing = 0;
+                this.averagePeriod = (this.averagePeriod * (this.numberOfSwings++) + this.lastPeriod) / this.numberOfSwings;
+            }
+            this.backswing = !this.backswing;
+        }
         //Compute drag force, using approx. 0.5 C_D
-        let drag = 0.25 
-            * this.airDensity 
-            * Math.PI 
-            * this.angularVelocity * this.angularVelocity
-            * this.radius * this.radius * this.radius * this.radius 
-            / this.mass / this.length;
+        let drag = this.getDrag() / this.mass;
         //This should be in changeFunction, but isn't for simplicity reasons
         //Apply changes
         this.angle = state[0] % (2 * Math.PI);
         this.angularVelocity = state[1] - Math.sign(state[1]) * drag;
+    }
+
+    /**
+     * Finds the current drag on the ball based on fluid resistance formula
+     */
+    getDrag() {
+        return 0.25 
+            * this.airDensity 
+            * Math.PI 
+            * this.angularVelocity * this.angularVelocity
+            * this.radius * this.radius * this.radius * this.radius 
+            / this.length;
+    }
+
+    /**
+     * Calculates the period using the approximation sin t = t
+     * leading to the equation T = 2pi * sqrt(L/g)
+     */
+    getTheoreticalPeriod() {
+        return 2 * Math.PI * Math.sqrt(this.length / this.gravity);
     }
 
 }
