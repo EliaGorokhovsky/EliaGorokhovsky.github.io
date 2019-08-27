@@ -17,7 +17,23 @@ body {
     padding: 1rem;
 }
 
-p {
+.header {
+    background: $skyblue;
+    text-align: center;
+}
+
+img {
+    border-radius: 1rem;
+    width: 20rem;
+    height: auto;
+}
+
+.flexContainer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.p {
     color: $offblack;
     font: garamond;
 }
