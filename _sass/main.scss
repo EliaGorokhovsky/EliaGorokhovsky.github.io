@@ -1,10 +1,10 @@
 @import "_navbar";
+@import "_responsive-layout";
 @import "_vars";
 
 * {
     box-sizing: border-box;
 }
-
 
 html,
 body {
@@ -24,13 +24,8 @@ body {
 
 img {
     border-radius: 1rem;
-    width: 20rem;
+    padding: 1rem;
     height: auto;
-}
-
-.flexContainer {
-    display: flex;
-    justify-content: flex-start;
 }
 
 .p {
