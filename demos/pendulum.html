@@ -8,15 +8,19 @@ layout: demo
 <body>
     <script type="module" src="/assets/js/demos/double-pendulum/PendulumDrawer.js"></script>
     <noscript>This demo requires Javascript to run.</noscript>
-    <canvas class="pendulumCanvas" width="500" height="500"></canvas>
-    <div class="pendulumParamsDisplay">
-        <div id="lengthParam"></div>
-        <div id="massParam"></div>
-        <div id="radiusParam"></div>
-        <div id="gravityParam"></div>
-        <div id="airDensityParam"></div>
-        <div id="theoryPeriodParam"></div>
-        <div id="lastPeriodParam"></div>
-        <div id="meanPeriodParam"></div>
+    <div class="canvasContainer col-4 col-s-8">
+            <canvas class="pendulumCanvas"></canvas>
+    </div>
+    <div class="col-3 col-s-4">
+        <div class="pendulumParamsDisplay col-12 col-s-12">
+            <div id="lengthParam"></div>
+            <div id="massParam"></div>
+            <div id="radiusParam"></div>
+            <div id="gravityParam"></div>
+            <div id="airDensityParam"></div>
+            <div id="theoryPeriodParam"></div>
+            <div id="lastPeriodParam"></div>
+            <div id="meanPeriodParam"></div>
+        </div>
     </div>
 </body>

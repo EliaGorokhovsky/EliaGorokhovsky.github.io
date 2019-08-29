@@ -1,4 +1,5 @@
 import { Pendulum } from "./Pendulum.js";
+import { roundTo } from "../../Util.js";
 
 /**
  * Handles drawing directly to the canvas
@@ -18,7 +19,6 @@ class DrawingApp {
         this.lastRender = 0;
                 
         this.pendulum = new Pendulum(0.25, 2, Math.PI / 12, 9.8, 1, 0);
-
     }
 
     /**
@@ -64,15 +64,18 @@ class DrawingApp {
         document.getElementById("radiusParam").textContent = `radius: ${this.pendulum.radius} m`;
         document.getElementById("gravityParam").textContent = `gravity acc.: ${this.pendulum.gravity} ms^-2`;
         document.getElementById("airDensityParam").textContent = `air density: ${this.pendulum.airDensity} gm^-3`;
-        document.getElementById("theoryPeriodParam").textContent = `calculated period: ${this.pendulum.getTheoreticalPeriod()} s`;
-        document.getElementById("lastPeriodParam").textContent = `last period: ${this.pendulum.lastPeriod} s`;
-        document.getElementById("meanPeriodParam").textContent = `mean period: ${this.pendulum.averagePeriod} s`;
+        document.getElementById("theoryPeriodParam").textContent = `calculated period: ${roundTo(this.pendulum.getTheoreticalPeriod(), 3)} s`;
+        document.getElementById("lastPeriodParam").textContent = `last period: ${roundTo(this.pendulum.lastPeriod, 3)} s`;
+        document.getElementById("meanPeriodParam").textContent = `mean period: ${roundTo(this.pendulum.averagePeriod, 3)} s`;
     }
 
     /**
      * Update the graphics and logic
      */
     update(timestamp) {
+        let container = document.getElementsByClassName("canvasContainer")[0]
+        this.canvas.width = container.clientWidth;
+        this.canvas.height = container.clientWidth;
         let delta = timestamp - this.lastRender;
         this.pendulum.update(Math.min(delta / 1000, 0.05));
         this.updateParams();
