@@ -9,7 +9,7 @@ class DrawingApp {
      * Set up the canvas
      */
     constructor() {
-        this.canvas = document.getElementsByClassName("pendulumCanvas")[0];
+        this.canvas = document.getElementsByClassName("demoCanvas")[0];
         this.context = this.canvas.getContext("2d");
         this.context.lineCap = "round";
         this.context.lineJoin = "round";

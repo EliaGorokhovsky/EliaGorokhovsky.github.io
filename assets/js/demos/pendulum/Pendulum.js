@@ -1,4 +1,4 @@
-import { rk4 } from "./Solver.js";
+import { rk4 } from "../Solver.js";
 
 /**
  * Stores state variables of a single pendulum
